@@ -288,9 +288,9 @@ class Ticket
         $cc = $cc === 0 ? 0 : 1;
 
         $this->_fields_custom["SendMail"] = array(
-            "assignees": $assignees,
-            "contact": $contact,
-            "permanentCCs": $cc
+            "assignees" => $assignees,
+            "contact" => $contact,
+            "permanentCCs" => $cc
         );
     }
 
