@@ -34,6 +34,9 @@ class Ticket
     /** Ticket fields. */
     private $_fields;
 
+    /** Ticket custom fields. */
+    private $_fields_custom;
+
     /** Ticket entries. */
     private $_entries;
 
@@ -53,6 +56,7 @@ class Ticket
         $this->_fields = array(
             "Assignees" => array()
         );
+        $this->_fields_custom = array();
 
         // Initialize entries.
         $this->_entries = array();
@@ -112,6 +116,37 @@ class Ticket
     }
 
     /**
+     * Returns a list of valid ticket types.
+     */
+    public function get_types() {
+        return array(
+            "Incident",
+            "Service Request - Service",
+            "Service Request - Question",
+            "Problem",
+            "Quality and Standards"
+        );
+    }
+
+    /**
+     * Returns a list of valid ticket categories.
+     */
+    public function get_categories() {
+        return array(
+            "AV & Media",
+            "Email and Calendaring",
+            "File store",
+            "Hardware",
+            "IT Account",
+            "Library",
+            "Network",
+            "Other",
+            "Software",
+            "Web"
+        );
+    }
+
+    /**
      * Set the ticket title.
      * 
      * @param string $title The title of the ticket.
@@ -161,7 +196,9 @@ class Ticket
      * @param  string $contents The contents of this entry.
      */
     public function add_entry($contents) {
-        $this->_entries[] = $contents;
+        $this->_entries[] = array(
+            "Description" => $contents
+        );
     }
 
     /**
@@ -188,6 +225,32 @@ class Ticket
         }
 
         $this->_fields["Status"] = $status;
+    }
+
+    /**
+     * Set ticket type.
+     * 
+     * @param string $type The type of the ticket.
+     */
+    public function set_type($type) {
+        if (!in_array($type, $this->get_types())) {
+            throw new \Exception("Invalid type '{$type}'!");
+        }
+
+        $this->_fields_custom["Type of Ticket"] = $type;
+    }
+
+    /**
+     * Set ticket category.
+     * 
+     * @param string $category The category of the ticket.
+     */
+    public function set_category($category) {
+        if (!in_array($category, $this->get_categories())) {
+            throw new \Exception("Invalid category '{$category}'!");
+        }
+
+        $this->_fields_custom["Category"] = $category;
     }
 
     /**
