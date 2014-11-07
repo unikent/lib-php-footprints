@@ -116,7 +116,8 @@ class Ticket
             "Waiting - External",
             "Waiting - User",
             "Waiting Kit Loan/Other",
-            "Resolved"
+            "Resolved",
+            "Closed"
         );
     }
 
