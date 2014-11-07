@@ -160,6 +160,23 @@ class Ticket
     }
 
     /**
+     * Add a technical note to the ticket.
+     * 
+     * @param string $note The note.
+     */
+    public function add_technical_note($note) {
+        if (!isset($this->_fields_custom["Technical Notes"])) {
+            $this->_fields_custom["Technical Notes"] = "";
+        }
+
+        if (!emtpy($this->_fields_custom["Technical Notes"])) {
+            $note = "\n\n" . $note;
+        }
+
+        $this->_fields_custom["Technical Notes"] .= $note;
+    }
+
+    /**
      * Add an assignee to the ticket.
      * 
      * @param array $assignee The username of the user or the name of the team.
