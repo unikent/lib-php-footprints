@@ -9,7 +9,7 @@ require_once(dirname(__FILE__) . "/../src/ChangeRequest.php");
 require_once(dirname(__FILE__) . "/../src/API.php");
 
 $ticket = new \Footprints\ChangeRequest("My Example Change Request");
-$ticket->set_emails(0, 0, 0);
+$ticket->set_emails(false, false, false);
 $ticket->set_priority("Normal");
 $ticket->set_user("sk");
 $ticket->add_assignees(array(

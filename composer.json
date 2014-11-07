@@ -18,5 +18,8 @@
       "psr-4": {
          "Footprints\\": ["src/"]
       }
+   },
+   "require-dev": {
+      "phpdocumentor/phpdocumentor": "2.7"
    }
 }

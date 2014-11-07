@@ -7,27 +7,11 @@
 namespace Footprints;
 
 /**
- * Usage example:
- * <code>
- * $ticket = new \Footprints\Ticket("My Example Ticket");
- * $ticket->set_priority("Normal");
- * $ticket->set_user("sk");
- * $ticket->add_assignees(array(
- *     "Operations",
- *     "aejm"
- * ));
- *
- * $ticket->add_entry("We did this cool thing the other day!");
- * $ticket->add_entry("Oh, it isnt working.");
- * $ticket->add_entry("Fixed!");
+ * A Footprints Ticket object.
  * 
- * $ticket->set_status("Resolved");
- * 
- * $ticket->create();
- *
- * // Or (Bulk).
- * \Footprints\API::create(array($ticket, $ticket2));
- * </code>
+ * @example ../examples/example-1.php Standard Ticket Example.
+ * @example ../examples/example-2.php Standard Ticket Example with asynchronous creation.
+ * @example ../examples/example-3.php CR Example.
  */
 class Ticket
 {
@@ -282,11 +266,15 @@ class Ticket
      * Who should be emailed about this ticket?
      * Note: Footprints emails assignees anyway.
      * But maybe the bug will be fixed one day!
+     *
+     * @param boolean $assignees Should assignees be emailed?
+     * @param boolean $contact Should contacts be emailed?
+     * @param boolean $cc Should cc'd addresses be emailed?
      */
-    public function set_emails($assignees = 1, $contact = 1, $cc = 1) {
-        $assignees = $assignees === 0 ? 0 : 1;
-        $contact = $contact === 0 ? 0 : 1;
-        $cc = $cc === 0 ? 0 : 1;
+    public function set_emails($assignees = true, $contact = true, $cc = true) {
+        $assignees = $assignees === false ? 0 : 1;
+        $contact = $contact === false ? 0 : 1;
+        $cc = $cc === false ? 0 : 1;
 
         $this->_fields_custom["SendMail"] = array(
             "assignees" => $assignees,

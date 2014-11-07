@@ -6,6 +6,13 @@
 
 namespace Footprints;
 
+/**
+ * A Change Request is much like a ticket, but
+ * is in a different workspace and has slightly
+ * different fields.
+ *
+ * @see Ticket
+ */
 class ChangeRequest extends Ticket
 {
     /** Workspace. */
@@ -71,7 +78,7 @@ class ChangeRequest extends Ticket
 
     /**
      * Set ticket category.
-     * 
+     *
      * @param string $category The category of the ticket.
      */
     public function set_category($category) {

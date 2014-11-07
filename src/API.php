@@ -15,6 +15,8 @@ class API
 
     /**
      * Returns the POST data for a request.
+     * 
+     * @param mixed[] $tickets The ticket object(s).
      */
     private static function get_post_data($tickets) {
         if (!is_array($tickets)) {
@@ -33,7 +35,7 @@ class API
     /**
      * Send a ticket (or tickets) to FP.
      * 
-     * @param Ticket|array $tickets The ticket object(s).
+     * @param mixed[] $tickets The ticket object(s).
      */
     public static function create($tickets) {
         $json = static::get_post_data($tickets);
@@ -70,7 +72,7 @@ class API
     /**
      * Send a ticket (or tickets) to FP asynchronously.
      * 
-     * @param Ticket|array $tickets The ticket object(s).
+     * @param mixed[] $tickets The ticket object(s).
      */
     public static function create_async($tickets) {
         $json = static::get_post_data($tickets);
