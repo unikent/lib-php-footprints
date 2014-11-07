@@ -39,6 +39,23 @@ class API
         curl_setopt($ch, CURLOPT_HTTPHEADER,     array('Content-Type: text/plain')); 
 
         $result = curl_exec($ch);
-        echo $result;
+        
+        // Parse the result.
+        $parts = explode(' ', $result);
+        if (count($parts) !== 3) {
+            throw new \Exception("Unknown result from Footprints API: '{$result}'.");
+        }
+
+        if ($parts[0] !== "OK") {
+            throw new \Exception("Footprints API did not return OK: '{$result}'.");
+        }
+
+        // Return the ticket number.
+        $ticketnumber = explode(':', $parts[2]);
+        if (isset($ticketnumber[1])) {
+            return $ticketnumber[1];
+        }
+
+        throw new \Exception("Unknown result from Footprints API: '{$result}'.");
     }
 }

@@ -24,4 +24,4 @@ $ticket->add_entry("Fixed!");
 
 $ticket->set_status("Resolved");
 
-$ticket->create();
+echo $ticket->create();
