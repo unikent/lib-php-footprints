@@ -354,6 +354,7 @@ class Ticket
      */
     public function get_footprints_entry() {
         $obj = new \stdClass();
+        $obj->Workspace = $this->_workspace;
 
         // First, the standard fields.
         foreach ($this->_fields as $name => $value) {
