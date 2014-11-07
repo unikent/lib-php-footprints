@@ -15,15 +15,18 @@ namespace Footprints;
  * $ticket->add_assignees(array(
  *     "Operations",
  *     "aejm"
- * );
+ * ));
  *
  * $ticket->add_entry("We did this cool thing the other day!");
  * $ticket->add_entry("Oh, it isnt working.");
  * $ticket->add_entry("Fixed!");
  * 
- * $ticket->set_status("Closed");
+ * $ticket->set_status("Resolved");
  * 
  * $ticket->create();
+ *
+ * // Or (Bulk).
+ * \Footprints\API::create(array($ticket, $ticket2));
  * </code>
  */
 class Ticket
@@ -40,12 +43,6 @@ class Ticket
     /** Ticket entries. */
     private $_entries;
 
-    /** CMDB links. */
-    private $_links_ci;
-
-    /** Ticket links. */
-    private $_links_tickets;
-
     /**
      * Create a new ticket instance.
      *
@@ -54,21 +51,19 @@ class Ticket
     public function __construct($title = "") {
         // Initialize fields.
         $this->_fields = array(
-            "Assignees" => array()
+            "Assignees" => array(),
+            "CI Links" => array(),
+            "Ticket Links" => array()
         );
         $this->_fields_custom = array();
 
         // Initialize entries.
         $this->_entries = array();
 
-        // Initialize links.
-        $this->_links_ci = array();
-        $this->_links_tickets = array();
-
         // Initialize workspace link arrays.
         $workspaces = $this->get_workspaces();
         foreach ($workspaces as $id => $name) {
-            $this->_links_tickets[$id] = array();
+            $this->_fields["Ticket Links"][$id] = array();
         }
 
         // Set anything we have passed through and defaults.
@@ -196,6 +191,10 @@ class Ticket
      * @param  string $contents The contents of this entry.
      */
     public function add_entry($contents) {
+        if (empty($contents)) {
+            throw new \Exception("Error - contents of ticket cannot be empty!");
+        }
+
         $entry = array(
             "Description" => $contents
         );
@@ -271,7 +270,7 @@ class Ticket
         $type = is_array($type) ? $type : array($type);
         $name = is_array($name) ? $name : array($name);
 
-        $this->_links_ci[] = array(
+        $this->_fields["CI Links"][] = array(
             "Type" => $type,
             "Name" => $name
         );
@@ -296,12 +295,12 @@ class Ticket
      */
     public function add_ticket_link($number, $workspace = 2) {
         // Validate the workspace.
-        if (!isset($this->_links_tickets[$workspace])) {
+        if (!isset($this->_fields["Ticket Links"][$workspace])) {
             throw new \Exception("Invalid workspace '{$workspace}'!");
         }
 
-        if (!in_array($number, $this->_links_tickets[$workspace])) {
-            $this->_links_tickets[$workspace][] = $number;
+        if (!in_array($number, $this->_fields["Ticket Links"][$workspace])) {
+            $this->_fields["Ticket Links"][$workspace][] = $number;
         }
     }
 
@@ -312,5 +311,81 @@ class Ticket
      */
     public function add_change_request_link($number) {
         $this->add_ticket_link($number, 4);
+    }
+
+    /**
+     * Coalesces everything into a Footprints object.
+     */
+    public function get_footprints_entry() {
+        $customvals = array();
+        $obj = new \stdClass();
+
+        // First, the standard fields.
+        foreach ($this->_fields as $name => $value) {
+            $obj->$name = $value;
+        }
+
+        // Now the entries.
+        $obj->Entries = array();
+        foreach ($this->_entries as $entry) {
+            $entryobj = new \stdClass();
+            foreach ($entry as $name => $value) {
+                // Only set something that has changed.
+                if (!isset($customvals[$name]) || $customvals[$name] != $value) {
+                    $entryobj->$name = $value;
+                    $customvals[$name] = $value;
+                }
+            }
+            $obj->Entries[] = $entryobj;
+        }
+
+        // We must have one entry.
+        if (empty($obj->Entries)) {
+            throw new \Exception("You must have at least one entry!");
+        }
+
+        // Are there any custom values that were not set?
+        foreach ($this->_fields_custom as $name => $value) {
+            if (!isset($customvals[$name]) || $customvals[$name] != $value) {
+                // Update the last entry.
+                $index = count($obj->Entries) - 1;
+                $lastentry = $obj->Entries[$index];
+                $lastentry->$name = $value;
+
+                $customvals[$name] = $value;
+            }
+        }
+
+        // Now cleanup, only send what we need to send.
+        if (empty($this->_fields["CI Links"])) {
+            $k = "CI Links";
+            unset($obj->$k);
+        }
+
+        // Cleanup ticket links - workspaces.
+        $workspaces = $this->get_workspaces();
+        foreach ($workspaces as $id => $name) {
+            if (empty($this->_fields["Ticket Links"][$id])) {
+                $k = "Ticket Links";
+                $arr = $obj->$k;
+                unset($arr[$id]);
+                $obj->$k = $arr;
+            }
+        }
+
+        // Cleanup ticket links.
+        $k = "Ticket Links";
+        if (empty($obj->$k)) {
+            unset($obj->$k);
+        }
+
+        return $obj;
+    }
+
+    /**
+     * Send the ticket to FP!
+     */
+    public function create() {
+        \Footprints\API::create(array($this));
     }
 }
