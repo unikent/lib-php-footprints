@@ -13,14 +13,8 @@ $ticket->set_user("sk");
 $ticket->set_type("Incident");
 $ticket->set_category("Web");
 $ticket->add_assignees(array(
-    "Operations",
-    "aejm"
-));
-$ticket->add_server_link(array(
-    "paomo.kent.ac.uk",
-    "lamian.kent.ac.uk",
-    "youmian.kent.ac.uk",
-    "biangbiang.kent.ac.uk"
+    "Learning and Research Systems",
+    "sk"
 ));
 
 $ticket->add_entry("We did this cool thing the other day!");
@@ -30,4 +24,4 @@ $ticket->add_entry("Fixed!");
 
 $ticket->set_status("Resolved");
 
-$ticket->send();
+$ticket->create();
