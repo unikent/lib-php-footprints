@@ -170,7 +170,7 @@ class Ticket
             $this->_fields_custom["Technical Notes"] = "";
         }
 
-        if (!emtpy($this->_fields_custom["Technical Notes"])) {
+        if (!empty($this->_fields_custom["Technical Notes"])) {
             $note = "\n\n" . $note;
         }
 
