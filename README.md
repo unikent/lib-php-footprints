@@ -1,7 +1,6 @@
-footprints-php
+Footprints PHP API
 ==============
 
-Footprints PHP API.
 Full API docs available here: http://unikent.github.io/footprints-php/
 
 Add this to your composer require:
