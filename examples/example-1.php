@@ -8,6 +8,7 @@ require_once(dirname(__FILE__) . "/../src/Ticket.php");
 require_once(dirname(__FILE__) . "/../src/API.php");
 
 $ticket = new \Footprints\Ticket("My Example Ticket");
+$ticket->set_emails(0, 0, 0);
 $ticket->set_priority("Normal");
 $ticket->set_user("sk");
 $ticket->set_type("Incident");
