@@ -85,3 +85,4 @@ class ChangeRequest extends Ticket
         throw new \Exception("You cannot set the category for a Change Request ticket!");
     }
 }
+

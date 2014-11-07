@@ -412,3 +412,4 @@ class Ticket
         \Footprints\API::create_async(array($this));
     }
 }
+
