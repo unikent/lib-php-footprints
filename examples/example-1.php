@@ -5,6 +5,7 @@
  */
 
 require_once(dirname(__FILE__) . "/../src/Ticket.php");
+require_once(dirname(__FILE__) . "/../src/API.php");
 
 $ticket = new \Footprints\Ticket("My Example Ticket");
 $ticket->set_priority("Normal");
@@ -29,4 +30,4 @@ $ticket->add_entry("Fixed!");
 
 $ticket->set_status("Resolved");
 
-print_r(array($ticket->get_footprints_entry()));
+$ticket->send();
