@@ -70,6 +70,7 @@ class Ticket
         $this->set_title($title);
         $this->set_priority("Normal");
         $this->set_status("Open");
+        $this->set_emails();
     }
 
     /**
@@ -274,6 +275,23 @@ class Ticket
         }
 
         $this->_fields_custom["Category"] = $category;
+    }
+
+    /**
+     * Who should be emailed about this ticket?
+     * Note: Footprints emails assignees anyway.
+     * But maybe the bug will be fixed one day!
+     */
+    public function set_emails($assignees = 1, $contact = 1, $cc = 1) {
+        $assignees = $assignees === 0 ? 0 : 1;
+        $contact = $contact === 0 ? 0 : 1;
+        $cc = $cc === 0 ? 0 : 1;
+
+        $this->_fields_custom["SendMail"] = array(
+            "assignees": $assignees,
+            "contact": $contact,
+            "permanentCCs": $cc
+        );
     }
 
     /**
