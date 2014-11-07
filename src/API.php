@@ -12,12 +12,11 @@ namespace Footprints;
 class API
 {
     const api_url = 'https://orange.kent.ac.uk/api/logTicket/index.php';
+
     /**
-     * Send a ticket (or tickets) to FP.
-     * 
-     * @param Ticket|array $tickets The ticket object(s).
+     * Returns the POST data for a request.
      */
-    public static function create($tickets) {
+    private static function get_post_data($tickets) {
         if (!is_array($tickets)) {
             $tickets = array($tickets);
         }
@@ -28,7 +27,16 @@ class API
             $raw[] = $ticket->get_footprints_entry();
         }
 
-        $json = json_encode($raw);
+        return json_encode($raw);
+    }
+
+    /**
+     * Send a ticket (or tickets) to FP.
+     * 
+     * @param Ticket|array $tickets The ticket object(s).
+     */
+    public static function create($tickets) {
+        $json = static::get_post_data($tickets);
 
         // Send it to orange!
         $ch = curl_init();
@@ -57,5 +65,28 @@ class API
         }
 
         throw new \Exception("Unknown result from Footprints API: '{$result}'.");
+    }
+
+    /**
+     * Send a ticket (or tickets) to FP asynchronously.
+     * 
+     * @param Ticket|array $tickets The ticket object(s).
+     */
+    public static function create_async($tickets) {
+        $json = static::get_post_data($tickets);
+
+        $parts = parse_url(self::api_url);
+        $fp = fsockopen($parts['host'], 443, $errno, $errstr, 30);
+
+        // Create output.
+        $output  = "POST " . $parts['path'] . " HTTP/1.1\r\n";
+        $output .= "Host: " . $parts['host'] . "\r\n";
+        $output .= "Content-Type: text/plain\r\n";
+        $output .= "Content-Length: " . strlen($json) . "\r\n";
+        $output .= "Connection: Close\r\n\r\n";
+        $output .= $json;
+
+        fwrite($fp, $output);
+        fclose($fp);
     }
 }

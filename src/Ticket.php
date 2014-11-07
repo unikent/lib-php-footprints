@@ -388,4 +388,11 @@ class Ticket
     public function create() {
         \Footprints\API::create(array($this));
     }
+
+    /**
+     * Send ticket asynchronously.
+     */
+    public function create_async() {
+        \Footprints\API::create_async(array($this));
+    }
 }
