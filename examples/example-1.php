@@ -18,11 +18,8 @@ $ticket->add_assignees(array(
 ));
 
 $ticket->add_entry("We did this cool thing the other day!");
-
-$ticket->set_type("Problem");
 $ticket->add_technical_note("Something is broken.");
 $ticket->add_entry("Oh, it isnt working.");
-
 $ticket->add_technical_note("Hah it was that function I wrote a long time ago.");
 $ticket->add_entry("Fixed!");
 

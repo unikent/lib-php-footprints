@@ -213,16 +213,7 @@ class Ticket
             throw new \Exception("Error - contents of ticket cannot be empty!");
         }
 
-        $entry = array(
-            "Description" => $contents
-        );
-
-        // Custom fields need to go in the entry (Footprints reasons).
-        foreach ($this->_fields_custom as $name => $val) {
-            $entry[$name] = $val;
-        }
-
-        $this->_entries[] = $entry;
+        $this->_entries[] = $contents;
     }
 
     /**
@@ -352,7 +343,6 @@ class Ticket
      * Coalesces everything into a Footprints object.
      */
     public function get_footprints_entry() {
-        $customvals = array();
         $obj = new \stdClass();
 
         // First, the standard fields.
@@ -364,31 +354,21 @@ class Ticket
         $obj->Entries = array();
         foreach ($this->_entries as $entry) {
             $entryobj = new \stdClass();
-            foreach ($entry as $name => $value) {
-                // Only set something that has changed.
-                if (!isset($customvals[$name]) || $customvals[$name] != $value) {
+            $entryobj->Description = $entry;
+
+            // If this is the first one, set the custom values.
+            if (empty($obj->Entries)) {
+                foreach ($this->_fields_custom as $name => $value) {
                     $entryobj->$name = $value;
-                    $customvals[$name] = $value;
                 }
             }
+
             $obj->Entries[] = $entryobj;
         }
 
         // We must have one entry.
         if (empty($obj->Entries)) {
             throw new \Exception("You must have at least one entry!");
-        }
-
-        // Are there any custom values that were not set?
-        foreach ($this->_fields_custom as $name => $value) {
-            if (!isset($customvals[$name]) || $customvals[$name] != $value) {
-                // Update the last entry.
-                $index = count($obj->Entries) - 1;
-                $lastentry = $obj->Entries[$index];
-                $lastentry->$name = $value;
-
-                $customvals[$name] = $value;
-            }
         }
 
         // Now cleanup, only send what we need to send.
