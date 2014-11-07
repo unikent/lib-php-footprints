@@ -67,9 +67,18 @@ class Ticket
         }
 
         // Set anything we have passed through and defaults.
+        $this->set_defaults();
         $this->set_title($title);
+    }
+
+    /**
+     * Sets defaults.
+     */
+    protected function set_defaults() {
         $this->set_priority("Normal");
         $this->set_status("Open");
+        $this->set_type("Incident");
+        $this->set_category("Web");
         $this->set_emails();
     }
 
@@ -399,9 +408,11 @@ class Ticket
 
     /**
      * Send the ticket to FP!
+     *
+     * @return string Footprints ticket number, or an error.
      */
     public function create() {
-        \Footprints\API::create(array($this));
+        return \Footprints\API::create(array($this));
     }
 
     /**

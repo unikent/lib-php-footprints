@@ -12,6 +12,16 @@ class ChangeRequest extends Ticket
     protected $_workspace = 4;
 
     /**
+     * Sets defaults.
+     */
+    protected function set_defaults() {
+        $this->set_priority("Normal");
+        $this->set_status("Closed");
+        $this->set_type("Standard Change - Change Request");
+        $this->set_emails();
+    }
+
+    /**
      * Returns a list of valid statuses.
      */
     public function get_statuses() {
