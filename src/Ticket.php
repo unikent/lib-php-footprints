@@ -196,9 +196,16 @@ class Ticket
      * @param  string $contents The contents of this entry.
      */
     public function add_entry($contents) {
-        $this->_entries[] = array(
+        $entry = array(
             "Description" => $contents
         );
+
+        // Custom fields need to go in the entry (Footprints reasons).
+        foreach ($this->_fields_custom as $name => $val) {
+            $entry[$name] = $val;
+        }
+
+        $this->_entries[] = $entry;
     }
 
     /**
