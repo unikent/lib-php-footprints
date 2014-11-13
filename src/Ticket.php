@@ -62,7 +62,7 @@ class Ticket
      */
     protected function set_defaults() {
         $this->set_priority("Normal");
-        $this->set_status("Open");
+        $this->set_status("New");
         $this->set_type("Incident");
         $this->set_category("Web");
         $this->set_emails();
@@ -95,7 +95,7 @@ class Ticket
      */
     public function get_statuses() {
         return array(
-            "Open",
+            "New",
             "Updated by Agent",
             "In Progress",
             "Waiting - Specified Time",
@@ -389,8 +389,9 @@ class Ticket
 
             // If this is the first one, set the custom values.
             if (empty($obj->Entries)) {
+                $entryobj->projfields = new \stdClass();
                 foreach ($this->_fields_custom as $name => $value) {
-                    $entryobj->$name = $value;
+                    $entryobj->projfields->$name = $value;
                 }
             }
 

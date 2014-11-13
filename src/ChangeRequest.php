@@ -33,7 +33,7 @@ class ChangeRequest extends Ticket
      */
     public function get_statuses() {
         return array(
-            "Open",
+            "New",
             "Allocated",
             "In Progress",
             "Holding",
