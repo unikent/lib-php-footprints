@@ -36,6 +36,8 @@ class Ticket
         // Initialize fields.
         $this->_fields = array(
             "Assignees" => array(),
+            "PermanentCCs" => array(),
+            "OneTimeCCs" => array(),
             "CI Links" => array(),
             "Ticket Links" => array()
         );
@@ -198,9 +200,39 @@ class Ticket
     }
 
     /**
+     * Add a CC to the ticket.
+     * 
+     * @param string $cc The username (or the email) of the recipient.
+     * @param boolean $permanent Is the CC permanent or just for this update?
+     */
+    public function add_cc($cc, $permanent = true) {
+        $field = $permanent ? 'PermanentCCs' : 'OneTimeCCs';
+
+        if (!in_array($cc, $this->_fields[$field])) {
+            $this->_fields[$field][] = $cc;
+        }
+    }
+
+    /**
+     * Add CCs to the ticket.
+     * 
+     * @param string|array $cc The username (or the email) of the recipient.
+     * @param boolean $permanent Is the CC permanent or just for this update?
+     */
+    public function add_ccs($ccs, $permanent = true) {
+        if (!is_array($ccs)) {
+            $ccs = array($ccs);
+        }
+
+        foreach ($ccs as $cc) {
+            $this->add_cc($cc, $permanent);
+        }
+    }
+
+    /**
      * Add an entry (description) to this ticket.
      *
-     * @param  string $contents The contents of this entry.
+     * @param string $contents The contents of this entry.
      */
     public function add_entry($contents) {
         if (empty($contents)) {
