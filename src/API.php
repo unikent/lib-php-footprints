@@ -39,7 +39,15 @@ class API
      */
     public static function create($tickets) {
         $json = static::get_post_data($tickets);
+        return static::create_raw($json);
+    }
 
+    /**
+     * Send a ticket (or tickets) to FP.
+     * 
+     * @param string $json The raw JSON to send.
+     */
+    public static function create_raw($json) {
         // Send it to orange!
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL,            self::api_url);
@@ -76,7 +84,15 @@ class API
      */
     public static function create_async($tickets) {
         $json = static::get_post_data($tickets);
+        return static::create_async_raw($json);
+    }
 
+    /**
+     * Send a ticket (or tickets) to FP asynchronously.
+     * 
+     * @param string $json The raw JSON to send.
+     */
+    public static function create_async_raw($json) {
         $parts = parse_url(self::api_url);
         $fp = fsockopen($parts['host'], 443, $errno, $errstr, 30);
 
