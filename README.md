@@ -1,6 +1,8 @@
 Footprints PHP API
 ==============
 
+[![Latest Stable Version](https://poser.pugx.org/unikent/footprints-php/v/stable.png)](https://packagist.org/packages/unikent/footprints-php)
+
 Full API docs available here: http://unikent.github.io/footprints-php/
 
 Add this to your composer require:
