@@ -4,7 +4,7 @@
  * Note: This relies on the internal API maintained by Operations.
  */
 
-namespace Footprints;
+namespace unikent\Footprints;
 
 /**
  * A Change Request is much like a ticket, but

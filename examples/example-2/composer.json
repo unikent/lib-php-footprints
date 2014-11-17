@@ -1,0 +1,5 @@
+{
+   "require": {
+     "unikent/lib-php-footprints": "dev-master"
+   }
+}

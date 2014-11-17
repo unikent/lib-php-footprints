@@ -16,7 +16,7 @@
    },
    "autoload": {
       "psr-4": {
-         "Footprints\\": ["src/"]
+         "unikent\\Footprints\\": ["src/"]
       }
    },
    "require-dev": {
