@@ -1,12 +1,12 @@
 Footprints PHP API
 ==============
 
-[![Latest Stable Version](https://poser.pugx.org/unikent/footprints-php/v/stable.png)](https://packagist.org/packages/unikent/footprints-php)
+[![Latest Stable Version](https://poser.pugx.org/unikent/lib-php-footprints/v/stable.png)](https://packagist.org/packages/unikent/lib-php-footprints)
 
-Full API docs available here: http://unikent.github.io/footprints-php/
+Full API docs available here: http://unikent.github.io/lib-php-footprints/
 
 Add this to your composer require:
- * "unikent/footprints-php": "dev-master"
+ * "unikent/lib-php-footprints": "dev-master"
 
 Then create tickets like so:
 ```
