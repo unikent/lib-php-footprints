@@ -1,5 +1,5 @@
 {
-   "name": "unikent/footprints-php",
+   "name": "unikent/lib-php-footprints",
    "description": "Footprints API for PHP.",
    "type": "library",
    "keywords": [
