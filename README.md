@@ -10,7 +10,7 @@ Add this to your composer require:
 
 Then create tickets like so:
 ```
-$ticket = new \Footprints\Ticket("My Example Ticket");
+$ticket = new \unikent\Footprints\Ticket("My Example Ticket");
 $ticket->set_emails(false, false, false);
 $ticket->set_priority("Normal");
 $ticket->set_user("sk");
