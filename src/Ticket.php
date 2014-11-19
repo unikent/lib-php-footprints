@@ -74,7 +74,7 @@ class Ticket
     /**
      * Add a proj fields entry.
      */
-    protected function add_proj_field($name, $value) {
+    protected function set_proj_field($name, $value) {
         $obj = new \stdClass();
         if (isset($this->_fields_entry['projfields'])) {
             $obj = $this->_fields_entry['projfields'];
