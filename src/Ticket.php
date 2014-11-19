@@ -412,14 +412,14 @@ class Ticket
         $obj->Entries = array();
         foreach ($this->_entries as $entry) {
             $entryobj = new \stdClass();
-            $entryobj->Description = $entry;
 
-            // If this is the first one, set the custom values.
-            if (empty($obj->Entries)) {
-                foreach ($this->_fields_entry as $name => $value) {
-                    $entryobj->$name = $value;
-                }
+            // Set the custom values.
+            foreach ($this->_fields_entry as $name => $value) {
+                $entryobj->$name = $value;
             }
+
+            // Set the entry.
+            $entryobj->Description = $entry;
 
             $obj->Entries[] = $entryobj;
         }
