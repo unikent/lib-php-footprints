@@ -461,13 +461,13 @@ class Ticket
      * @return string Footprints ticket number, or an error.
      */
     public function create() {
-        return \Footprints\API::create(array($this));
+        return API::create(array($this));
     }
 
     /**
      * Send ticket asynchronously.
      */
     public function create_async() {
-        \Footprints\API::create_async(array($this));
+        API::create_async(array($this));
     }
 }
