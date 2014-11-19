@@ -21,8 +21,8 @@ class Ticket
     /** Ticket fields. */
     private $_fields;
 
-    /** Ticket custom fields. */
-    private $_fields_custom;
+    /** Ticket custom fields (per-entry). */
+    private $_fields_entry;
 
     /** Ticket entries. */
     private $_entries;
@@ -41,7 +41,7 @@ class Ticket
             "CI Links" => array(),
             "Ticket Links" => array()
         );
-        $this->_fields_custom = array();
+        $this->_fields_entry = array();
 
         // Initialize entries.
         $this->_entries = array();
@@ -55,6 +55,34 @@ class Ticket
         // Set anything we have passed through and defaults.
         $this->set_defaults();
         $this->set_title($title);
+    }
+
+    /**
+     * Returns a proj fields entry.
+     */
+    protected function get_proj_field($name) {
+        if (isset($this->_fields_entry['projfields'])) {
+            $obj = $this->_fields_entry['projfields'];
+            if (isset($obj->$name)) {
+                return $obj->$name;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Add a proj fields entry.
+     */
+    protected function add_proj_field($name, $value) {
+        $obj = new \stdClass();
+        if (isset($this->_fields_entry['projfields'])) {
+            $obj = $this->_fields_entry['projfields'];
+        }
+
+        $obj->$name = $value;
+
+        $this->_fields_entry['projfields'] = $obj;
     }
 
     /**
@@ -162,15 +190,14 @@ class Ticket
      * @param string $note The note.
      */
     public function add_technical_note($note) {
-        if (!isset($this->_fields_custom["Technical Notes"])) {
-            $this->_fields_custom["Technical Notes"] = "";
-        }
-
-        if (!empty($this->_fields_custom["Technical Notes"])) {
+        $notes = $this->get_proj_field("Technical Notes");
+        if (!empty($notes)) {
             $note = "\n\n" . $note;
+        } else {
+            $notes = $note;
         }
 
-        $this->_fields_custom["Technical Notes"] .= $note;
+        $this->set_proj_field("Technical Notes", $notes);
     }
 
     /**
@@ -278,7 +305,7 @@ class Ticket
             throw new \Exception("Invalid type '{$type}'!");
         }
 
-        $this->_fields_custom["Type of Ticket"] = $type;
+        $this->set_proj_field("Type of Ticket", $type);
     }
 
     /**
@@ -291,7 +318,7 @@ class Ticket
             throw new \Exception("Invalid category '{$category}'!");
         }
 
-        $this->_fields_custom["Category"] = $category;
+        $this->set_proj_field("Category", $category);
     }
 
     /**
@@ -308,7 +335,7 @@ class Ticket
         $contact = $contact === false ? 0 : 1;
         $cc = $cc === false ? 0 : 1;
 
-        $this->_fields_custom["SendMail"] = array(
+        $this->_fields_entry["SendMail"] = array(
             "assignees" => $assignees,
             "contact" => $contact,
             "permanentCCs" => $cc
@@ -389,9 +416,8 @@ class Ticket
 
             // If this is the first one, set the custom values.
             if (empty($obj->Entries)) {
-                $entryobj->projfields = new \stdClass();
-                foreach ($this->_fields_custom as $name => $value) {
-                    $entryobj->projfields->$name = $value;
+                foreach ($this->_fields_entry as $name => $value) {
+                    $entryobj->$name = $value;
                 }
             }
 
