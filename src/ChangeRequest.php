@@ -73,7 +73,7 @@ class ChangeRequest extends Ticket
             throw new \Exception("Invalid type '{$type}'!");
         }
 
-        $this->_fields_custom["Change Type"] = $type;
+        $this->set_proj_field("Change Type", $type);
     }
 
     /**
