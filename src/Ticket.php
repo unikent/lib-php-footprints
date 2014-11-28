@@ -9,9 +9,8 @@ namespace unikent\Footprints;
 /**
  * A Footprints Ticket object.
  * 
- * @example ../examples/example-1.php Standard Ticket Example.
- * @example ../examples/example-2.php Standard Ticket Example with asynchronous creation.
- * @example ../examples/example-3.php CR Example.
+ * @example ../examples/example-1/run.php Standard Ticket Example.
+ * @example ../examples/example-2/run.php Standard Ticket Example with asynchronous creation.
  */
 class Ticket
 {

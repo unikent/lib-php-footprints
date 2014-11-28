@@ -12,6 +12,7 @@ namespace unikent\Footprints;
  * different fields.
  *
  * @see Ticket
+ * @example ../examples/example-3/run.php Example Change Request.
  */
 class ChangeRequest extends Ticket
 {
