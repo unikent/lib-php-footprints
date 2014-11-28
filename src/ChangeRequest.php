@@ -16,11 +16,18 @@ namespace unikent\Footprints;
  */
 class ChangeRequest extends Ticket
 {
-    /** Workspace. */
+    /**
+     * Workspace.
+     * 
+     * @internal
+     * @var integer
+     */
     protected $_workspace = 4;
 
     /**
      * Sets defaults.
+     * 
+     * @internal
      */
     protected function set_defaults() {
         $this->set_priority("Normal");

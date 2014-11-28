@@ -11,11 +11,15 @@ namespace unikent\Footprints;
  */
 class API
 {
+    /**
+     * The URL of the Footprints API.
+     */
     const api_url = 'https://orange.kent.ac.uk/api/logTicket/index.php';
 
     /**
      * Returns the POST data for a request.
-     * 
+     *
+     * @internal
      * @param mixed[] $tickets The ticket object(s).
      */
     private static function get_post_data($tickets) {

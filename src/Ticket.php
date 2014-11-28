@@ -14,21 +14,42 @@ namespace unikent\Footprints;
  */
 class Ticket
 {
-    /** Workspace. */
+    /**
+     * Workspace.
+     *
+     * @internal
+     * @var integer
+     */
     protected $_workspace = 2;
 
-    /** Ticket fields. */
+    /**
+     * Ticket fields.
+     * 
+     * @internal
+     * @var array
+     */
     private $_fields;
 
-    /** Ticket custom fields (per-entry). */
+    /**
+     * Ticket custom fields (per-entry).
+     * 
+     * @internal
+     * @var array
+     */
     private $_fields_entry;
 
-    /** Ticket entries. */
+    /**
+     * Ticket entries.
+     * 
+     * @internal
+     * @var array
+     */
     private $_entries;
 
     /**
      * Create a new ticket instance.
      *
+     * @internal
      * @param string $title The title of the ticket.
      */
     public function __construct($title = "") {
@@ -58,6 +79,9 @@ class Ticket
 
     /**
      * Returns a proj fields entry.
+     *
+     * @internal
+     * @param string $name The name of the custom field.
      */
     protected function get_proj_field($name) {
         if (isset($this->_fields_entry['projfields'])) {
@@ -72,6 +96,10 @@ class Ticket
 
     /**
      * Add a proj fields entry.
+     * 
+     * @internal
+     * @param string $name The name of the custom field.
+     * @param string $value The value of the custom field.
      */
     protected function set_proj_field($name, $value) {
         $obj = new \stdClass();
@@ -86,6 +114,8 @@ class Ticket
 
     /**
      * Sets defaults.
+     * 
+     * @internal
      */
     protected function set_defaults() {
         $this->set_priority("Normal");
@@ -242,7 +272,7 @@ class Ticket
     /**
      * Add CCs to the ticket.
      * 
-     * @param string|array $cc The username (or the email) of the recipient.
+     * @param string|array $ccs The username (or the email) of the recipient.
      * @param boolean $permanent Is the CC permanent or just for this update?
      */
     public function add_ccs($ccs, $permanent = true) {
