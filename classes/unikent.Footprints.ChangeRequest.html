@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">4</span>
+                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -144,28 +144,28 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1218056755"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1486951755"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1218056755" class="accordion-body collapse in">
+            <div id="namespace-1486951755" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-240330988"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-461136294"></a>
                                 <a href="../namespaces/unikent.html" style="margin-left: 30px; padding-left: 0">unikent</a>
             </div>
-            <div id="namespace-240330988" class="accordion-body collapse ">
+            <div id="namespace-461136294" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-861347567"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-91667268"></a>
                                 <a href="../namespaces/unikent.Footprints.html" style="margin-left: 30px; padding-left: 0">Footprints</a>
             </div>
-            <div id="namespace-861347567" class="accordion-body collapse ">
+            <div id="namespace-91667268" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -212,7 +212,35 @@ is in a different workspace and has slightly
 different fields.</em></p>
                     
                     
-                                        
+                                                                        <h3>Examples</h3>
+                                                                            <h4>Example Change Request.</h4>
+                            <pre class="pre-scrollable">&lt;?php
+/**
+ * Footprints API for is-dev applications.
+ * Note: This relies on the internal API maintained by Operations.
+ */
+
+require_once(&quot;vendor/autoload.php&quot;);
+
+$ticket = new \unikent\Footprints\ChangeRequest(&quot;My Example Change Request&quot;);
+$ticket-&gt;set_emails(false, false, false);
+$ticket-&gt;set_priority(&quot;Normal&quot;);
+$ticket-&gt;set_user(&quot;sk&quot;);
+$ticket-&gt;add_assignees(array(
+    &quot;Learning and Research Systems&quot;,
+    &quot;sk&quot;
+));
+
+$ticket-&gt;add_entry(&quot;We did this cool thing the other day!&quot;);
+$ticket-&gt;add_technical_note(&quot;Something is broken.&quot;);
+$ticket-&gt;add_entry(&quot;Oh, it isnt working.&quot;);
+$ticket-&gt;add_technical_note(&quot;Hah it was that function I wrote a long time ago.&quot;);
+$ticket-&gt;add_entry(&quot;Fixed!&quot;);
+
+$ticket-&gt;set_status(&quot;Closed&quot;);
+
+echo $ticket-&gt;create();</pre>
+                                                                
                     <section id="summary">
                         <h2>Summary</h2>
                         <section class="row-fluid heading">
@@ -228,7 +256,6 @@ different fields.</em></p>
                         </section>
                         <section class="row-fluid public">
                             <section class="span4">
-                                                                    <a href="../classes/unikent.Footprints.Ticket.html#method___construct" class="">__construct()</a><br />
                                                                     <a href="../classes/unikent.Footprints.Ticket.html#method_get_workspaces" class="">get_workspaces()</a><br />
                                                                     <a href="../classes/unikent.Footprints.Ticket.html#method_get_priorities" class="">get_priorities()</a><br />
                                                                     <a href="../classes/unikent.Footprints.ChangeRequest.html#method_get_statuses" class="">get_statuses()</a><br />
@@ -264,12 +291,10 @@ different fields.</em></p>
                         </section>
                         <section class="row-fluid protected">
                             <section class="span4">
-                                                                    <a href="../classes/unikent.Footprints.Ticket.html#method_get_proj_field" class="">get_proj_field()</a><br />
-                                                                    <a href="../classes/unikent.Footprints.Ticket.html#method_set_proj_field" class="">set_proj_field()</a><br />
-                                                                    <a href="../classes/unikent.Footprints.ChangeRequest.html#method_set_defaults" class="">set_defaults()</a><br />
+                                                                    <em>No protected methods found</em>
                                                             </section>
                             <section class="span4">
-                                                                    <a href="../classes/unikent.Footprints.ChangeRequest.html#property__workspace" class="">$_workspace</a><br />
+                                                                    <em>No protected properties found</em>
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -280,9 +305,7 @@ different fields.</em></p>
                                                                     <em>No private methods found</em>
                                                             </section>
                             <section class="span4">
-                                                                    <a href="../classes/unikent.Footprints.Ticket.html#property__fields" class="">$_fields</a><br />
-                                                                    <a href="../classes/unikent.Footprints.Ticket.html#property__fields_entry" class="">$_fields_entry</a><br />
-                                                                    <a href="../classes/unikent.Footprints.Ticket.html#property__entries" class="">$_entries</a><br />
+                                                                    <em>No private properties found</em>
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -320,158 +343,12 @@ different fields.</em></p>
             </div>
 
                         
-                                    <a id="properties" name="properties"></a>
-            <div class="row-fluid">
-                <div class="span8 content class">
-                    <h2>Properties</h2>
-                </div>
-                <aside class="span4 detailsbar"></aside>
-            </div>
-
-                                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property__workspace" name="property__workspace" class="anchor"></a>
-            <article class="property">
-                <h3 class="protected ">$_workspace</h3>
-                <pre class="signature">$_workspace : </pre>
-                <p><em>Workspace.</em></p>
-                
-
-                                <h4>Type</h4>
-                
-                                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property__fields" name="property__fields" class="anchor"></a>
-            <article class="property">
-                <h3 class="private ">$_fields</h3>
-                <pre class="signature">$_fields : </pre>
-                <p><em>Ticket fields.</em></p>
-                
-
-                                <h4>Type</h4>
-                
-                                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/unikent.Footprints.Ticket.html"><div class="path-wrapper">\unikent\Footprints\Ticket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property__fields_entry" name="property__fields_entry" class="anchor"></a>
-            <article class="property">
-                <h3 class="private ">$_fields_entry</h3>
-                <pre class="signature">$_fields_entry : </pre>
-                <p><em>Ticket custom fields (per-entry).</em></p>
-                
-
-                                <h4>Type</h4>
-                
-                                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/unikent.Footprints.Ticket.html"><div class="path-wrapper">\unikent\Footprints\Ticket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property__entries" name="property__entries" class="anchor"></a>
-            <article class="property">
-                <h3 class="private ">$_entries</h3>
-                <pre class="signature">$_entries : </pre>
-                <p><em>Ticket entries.</em></p>
-                
-
-                                <h4>Type</h4>
-                
-                                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/unikent.Footprints.Ticket.html"><div class="path-wrapper">\unikent\Footprints\Ticket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                            
+                        
                                     <a id="methods" name="methods"></a>
             <div class="row-fluid">
                 <div class="span8 content class"><h2>Methods</h2></div>
                 <aside class="span4 detailsbar"></aside>
             </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method___construct" name="method___construct" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">__construct()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$title = &quot;&quot;</span>) </pre>
-                <p><em>Create a new ticket instance.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>string</td>
-                                <td>$title </td>
-                                <td><p>The title of the ticket.</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/unikent.Footprints.Ticket.html"><div class="path-wrapper">\unikent\Footprints\Ticket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
 
                                     <div class="row-fluid">
         <div class="span8 content class">
@@ -836,16 +713,16 @@ different fields.</em></p>
             <article class="method">
                 <h3 class="public ">add_ccs()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">add_ccs(  <span class="argument">$ccs</span>, boolean  <span class="argument">$permanent = true</span>) </pre>
+                <pre class="signature" style="margin-right: 54px;">add_ccs(string|array  <span class="argument">$ccs</span>, boolean  <span class="argument">$permanent = true</span>) </pre>
                 <p><em>Add CCs to the ticket.</em></p>
                 
 
                                     <h4>Parameters</h4>
                     <table class="table table-condensed table-hover">
                                                     <tr>
-                                <td></td>
+                                <td>string|array</td>
                                 <td>$ccs </td>
-                                <td></td>
+                                <td><p>The username (or the email) of the recipient.</p></td>
                             </tr>
                                                     <tr>
                                 <td>boolean</td>
@@ -1335,110 +1212,7 @@ Note: Footprints emails assignees anyway.</em></p>
         </aside>
     </div>
 
-                                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_get_proj_field" name="method_get_proj_field" class="anchor"></a>
-            <article class="method">
-                <h3 class="protected ">get_proj_field()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">get_proj_field(  <span class="argument">$name</span>) </pre>
-                <p><em>Returns a proj fields entry.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td></td>
-                                <td>$name </td>
-                                <td></td>
-                            </tr>
-                                            </table>
-                
-                
-                				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/unikent.Footprints.Ticket.html"><div class="path-wrapper">\unikent\Footprints\Ticket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_set_proj_field" name="method_set_proj_field" class="anchor"></a>
-            <article class="method">
-                <h3 class="protected ">set_proj_field()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">set_proj_field(  <span class="argument">$name</span>,   <span class="argument">$value</span>) </pre>
-                <p><em>Add a proj fields entry.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td></td>
-                                <td>$name </td>
-                                <td></td>
-                            </tr>
-                                                    <tr>
-                                <td></td>
-                                <td>$value </td>
-                                <td></td>
-                            </tr>
-                                            </table>
-                
-                
-                				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/unikent.Footprints.Ticket.html"><div class="path-wrapper">\unikent\Footprints\Ticket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_set_defaults" name="method_set_defaults" class="anchor"></a>
-            <article class="method">
-                <h3 class="protected ">set_defaults()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">set_defaults() </pre>
-                <p><em>Sets defaults.</em></p>
-                
-
-                
-                
-                				
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                                    </div>
+                                                                    </div>
     </section>
 
     <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
@@ -1488,7 +1262,7 @@ Note: Footprints emails assignees anyway.</em></p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on November 28th, 2014 at 15:47.
+                    on November 28th, 2014 at 16:22.
                 </section>
             </section>
         </section>
