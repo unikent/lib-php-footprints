@@ -4,7 +4,7 @@
  * Note: This relies on the internal API maintained by Operations.
  */
 
-namespace Footprints;
+namespace unikent\Footprints;
 
 /**
  * A Change Request is much like a ticket, but
@@ -33,7 +33,7 @@ class ChangeRequest extends Ticket
      */
     public function get_statuses() {
         return array(
-            "Open",
+            "New",
             "Allocated",
             "In Progress",
             "Holding",
@@ -73,7 +73,7 @@ class ChangeRequest extends Ticket
             throw new \Exception("Invalid type '{$type}'!");
         }
 
-        $this->_fields_custom["Change Type"] = $type;
+        $this->set_proj_field("Change Type", $type);
     }
 
     /**

@@ -4,7 +4,7 @@
  * Note: This relies on the internal API maintained by Operations.
  */
 
-namespace Footprints;
+namespace unikent\Footprints;
 
 /**
  * A Footprints Ticket object.
@@ -21,8 +21,8 @@ class Ticket
     /** Ticket fields. */
     private $_fields;
 
-    /** Ticket custom fields. */
-    private $_fields_custom;
+    /** Ticket custom fields (per-entry). */
+    private $_fields_entry;
 
     /** Ticket entries. */
     private $_entries;
@@ -36,10 +36,12 @@ class Ticket
         // Initialize fields.
         $this->_fields = array(
             "Assignees" => array(),
+            "PermanentCCs" => array(),
+            "OneTimeCCs" => array(),
             "CI Links" => array(),
             "Ticket Links" => array()
         );
-        $this->_fields_custom = array();
+        $this->_fields_entry = array();
 
         // Initialize entries.
         $this->_entries = array();
@@ -56,11 +58,39 @@ class Ticket
     }
 
     /**
+     * Returns a proj fields entry.
+     */
+    protected function get_proj_field($name) {
+        if (isset($this->_fields_entry['projfields'])) {
+            $obj = $this->_fields_entry['projfields'];
+            if (isset($obj->$name)) {
+                return $obj->$name;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Add a proj fields entry.
+     */
+    protected function set_proj_field($name, $value) {
+        $obj = new \stdClass();
+        if (isset($this->_fields_entry['projfields'])) {
+            $obj = $this->_fields_entry['projfields'];
+        }
+
+        $obj->$name = $value;
+
+        $this->_fields_entry['projfields'] = $obj;
+    }
+
+    /**
      * Sets defaults.
      */
     protected function set_defaults() {
         $this->set_priority("Normal");
-        $this->set_status("Open");
+        $this->set_status("New");
         $this->set_type("Incident");
         $this->set_category("Web");
         $this->set_emails();
@@ -93,7 +123,7 @@ class Ticket
      */
     public function get_statuses() {
         return array(
-            "Open",
+            "New",
             "Updated by Agent",
             "In Progress",
             "Waiting - Specified Time",
@@ -160,15 +190,14 @@ class Ticket
      * @param string $note The note.
      */
     public function add_technical_note($note) {
-        if (!isset($this->_fields_custom["Technical Notes"])) {
-            $this->_fields_custom["Technical Notes"] = "";
-        }
-
-        if (!empty($this->_fields_custom["Technical Notes"])) {
+        $notes = $this->get_proj_field("Technical Notes");
+        if (!empty($notes)) {
             $note = "\n\n" . $note;
+        } else {
+            $notes = $note;
         }
 
-        $this->_fields_custom["Technical Notes"] .= $note;
+        $this->set_proj_field("Technical Notes", $notes);
     }
 
     /**
@@ -198,9 +227,39 @@ class Ticket
     }
 
     /**
+     * Add a CC to the ticket.
+     * 
+     * @param string $cc The username (or the email) of the recipient.
+     * @param boolean $permanent Is the CC permanent or just for this update?
+     */
+    public function add_cc($cc, $permanent = true) {
+        $field = $permanent ? 'PermanentCCs' : 'OneTimeCCs';
+
+        if (!in_array($cc, $this->_fields[$field])) {
+            $this->_fields[$field][] = $cc;
+        }
+    }
+
+    /**
+     * Add CCs to the ticket.
+     * 
+     * @param string|array $cc The username (or the email) of the recipient.
+     * @param boolean $permanent Is the CC permanent or just for this update?
+     */
+    public function add_ccs($ccs, $permanent = true) {
+        if (!is_array($ccs)) {
+            $ccs = array($ccs);
+        }
+
+        foreach ($ccs as $cc) {
+            $this->add_cc($cc, $permanent);
+        }
+    }
+
+    /**
      * Add an entry (description) to this ticket.
      *
-     * @param  string $contents The contents of this entry.
+     * @param string $contents The contents of this entry.
      */
     public function add_entry($contents) {
         if (empty($contents)) {
@@ -246,7 +305,7 @@ class Ticket
             throw new \Exception("Invalid type '{$type}'!");
         }
 
-        $this->_fields_custom["Type of Ticket"] = $type;
+        $this->set_proj_field("Type of Ticket", $type);
     }
 
     /**
@@ -259,7 +318,7 @@ class Ticket
             throw new \Exception("Invalid category '{$category}'!");
         }
 
-        $this->_fields_custom["Category"] = $category;
+        $this->set_proj_field("Category", $category);
     }
 
     /**
@@ -276,7 +335,7 @@ class Ticket
         $contact = $contact === false ? 0 : 1;
         $cc = $cc === false ? 0 : 1;
 
-        $this->_fields_custom["SendMail"] = array(
+        $this->_fields_entry["SendMail"] = array(
             "assignees" => $assignees,
             "contact" => $contact,
             "permanentCCs" => $cc
@@ -353,14 +412,14 @@ class Ticket
         $obj->Entries = array();
         foreach ($this->_entries as $entry) {
             $entryobj = new \stdClass();
-            $entryobj->Description = $entry;
 
-            // If this is the first one, set the custom values.
-            if (empty($obj->Entries)) {
-                foreach ($this->_fields_custom as $name => $value) {
-                    $entryobj->$name = $value;
-                }
+            // Set the custom values.
+            foreach ($this->_fields_entry as $name => $value) {
+                $entryobj->$name = $value;
             }
+
+            // Set the entry.
+            $entryobj->Description = $entry;
 
             $obj->Entries[] = $entryobj;
         }
@@ -402,14 +461,14 @@ class Ticket
      * @return string Footprints ticket number, or an error.
      */
     public function create() {
-        return \Footprints\API::create(array($this));
+        return API::create(array($this));
     }
 
     /**
      * Send ticket asynchronously.
      */
     public function create_async() {
-        \Footprints\API::create_async(array($this));
+        API::create_async(array($this));
     }
 }
 
