@@ -17,7 +17,7 @@ $ticket->set_user("sk");
 $ticket->set_type("Incident");
 $ticket->set_category("Web");
 $ticket->add_assignees(array(
-    "Learning and Research Systems",
+    "Learning and Research Development",
     "sk"
 ));
 $ticket->add_entry("We did this cool thing the other day!");
